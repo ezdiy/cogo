@@ -10,11 +10,12 @@ This does not seem to happen in practice, but never the less it's a
 possibility.
 
 Furthermore, the dependence on unexported field offset in `g` is
-horrible a hack, never the less if you want seamless import thats
-what this package is for.
+a horrible hack. The repo as is will be updated to only work with
+recent versions (now Go 1.12.x). It's meant only for import
+into environments which can't afford modified runtime.
 
-A proper way to do this (and get support for all platforms and
-inlining), is this simple patch to your Go runtime:
+A proper way to do this (and get support for all platforms, go versions
+and inlining), is this patch:
 
 ```
 diff --git a/src/runtime/proc.go b/src/runtime/proc.go
@@ -25,7 +26,7 @@ index c06697ef6d..00da4cdbce 100644
         mcall(gosched_m)
  }
 
-+// True if a GC is stuck waiting for preempt of currently running goroutine.
++// True if GC is stuck waiting for preemption of currently running goroutine.
 +//go:nosplit
 +func WantsPreempt() bool {
 +       return getg().preempt
@@ -33,6 +34,4 @@ index c06697ef6d..00da4cdbce 100644
 +
  // goschedguarded yields the processor like gosched, but also checks
  // for forbidden states and opts out of the yield in those cases.
- //go:nosplit
-
-```
+ //go:nosplit```
