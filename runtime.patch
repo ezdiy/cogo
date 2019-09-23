@@ -6,7 +6,7 @@ index c06697ef6d..00da4cdbce 100644
         mcall(gosched_m)
  }
 
-+// True if a GC is stuck waiting for preempt of currently running goroutine.
++// True if GC is stuck waiting for preemption of currently running goroutine.
 +//go:nosplit
 +func WantsPreempt() bool {
 +       return getg().preempt
