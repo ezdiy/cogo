@@ -1,0 +1,17 @@
+diff --git a/src/runtime/proc.go b/src/runtime/proc.go
+index c06697ef6d..00da4cdbce 100644
+--- a/src/runtime/proc.go
++++ b/src/runtime/proc.go
+@@ -269,6 +269,12 @@ func Gosched() {
+        mcall(gosched_m)
+ }
+
++// True if a GC is stuck waiting for preempt of currently running goroutine.
++//go:nosplit
++func WantsPreempt() bool {
++       return getg().preempt
++}
++
+ // goschedguarded yields the processor like gosched, but also checks
+ // for forbidden states and opts out of the yield in those cases.
+ //go:nosplit
