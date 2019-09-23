@@ -11,7 +11,7 @@ possibility.
 
 The dependence on unexported field offset in `g` is a horrible hack.
 The repo as is will be updated to only work with recent versions, 
-now **Go 1.12.x up to git master**).
+now **Go 1.12.x up to git master**.
 
 It's meant only for import into environments which can't afford
 modified runtime.
